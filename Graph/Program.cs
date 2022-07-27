@@ -64,8 +64,8 @@ Console.WriteLine("Enter Id Of Q :");
 int q = int.Parse(Console.ReadLine()!);
 
 
-nodes[q].ConnectDirectlyToQ = true;
-nodes[q].ConnectDirectlyToQChecked = true;
+nodes[q-1].ConnectDirectlyToQ = true;
+nodes[q-1].ConnectDirectlyToQChecked = true;
 
 // QList Generated
 var flag = false;
@@ -74,14 +74,14 @@ do
     foreach (var node in nodes.Where(c => c.ConnectDirectlyToQ).ToList())
     {
 
-        nodes = node.Graphs;
-        foreach (var appGraph in nodes)
+        var nodess = node.Graphs;
+        foreach (var appGraph in nodess)
         {
             appGraph.ConnectDirectlyToQ = true;
             appGraph.ConnectDirectlyToQChecked = true;
         }
 
-        var ids = nodes.Where(c => c.ConnectDirectlyToQ).ToList();
+        var ids = nodess.Where(c => c.ConnectDirectlyToQ).ToList();
         if (ids.All(c => c.ConnectDirectlyToQChecked == true)
             && ids.SelectMany(s => s.Graphs).All(s => s.ConnectDirectlyToQChecked == true))
         {
@@ -101,7 +101,7 @@ for (int i = 1; true; i++)
 
     var node = nodes.First(c => c.Id == i);
 
-    if (node.Value > node.Graphs.Count)
+    if (node.Value >= node.Graphs.Count)
     {
         var newValue = node.Graphs.Count - 1;
         var decrease = node.Value - newValue;
@@ -152,11 +152,11 @@ Console.ReadLine();
 
 bool CheckIsFinished(List<AppGraph> graph, int qNodeId)
 {
-    var nodes = graph.Where(g => g.Id != qNodeId).ToList();
+    var nodesss = graph.Where(g => g.Id != qNodeId).ToList();
 
-    foreach (var node in nodes)
+    foreach (var node in nodesss)
     {
-        if (node.Value > node.Graphs.Count)
+        if (node.Value >= node.Graphs.Count)
         {
             return false;
         }
