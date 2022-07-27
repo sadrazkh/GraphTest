@@ -148,6 +148,11 @@ for (int i = 1; true; i++)
     }
 }
 
+foreach (var node in nodes)
+{
+    Console.WriteLine($"{node.Id} -> {node.Value}");
+}
+
 Console.ReadLine();
 
 bool CheckIsFinished(List<AppGraph> graph, int qNodeId)
