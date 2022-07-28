@@ -17,7 +17,7 @@ for (int i = 1; i <= n; i++)
     {
         Id = i,
         Value = 0,
-        Graphs = new List<AppGraph>(), 
+        Graphs = new List<AppGraph>(),
         ConnectDirectlyToQ = false,
         ConnectDirectlyToQChecked = false,
     });
@@ -64,8 +64,8 @@ Console.WriteLine("Enter Id Of Q :");
 int q = int.Parse(Console.ReadLine()!);
 
 
-nodes[q-1].ConnectDirectlyToQ = true;
-nodes[q-1].ConnectDirectlyToQChecked = true;
+nodes[q - 1].ConnectDirectlyToQ = true;
+nodes[q - 1].ConnectDirectlyToQChecked = true;
 
 // QList Generated
 var flag = false;
@@ -139,10 +139,10 @@ for (int i = 1; true; i++)
             }
         } while (decrease > 0);
 
-        
+
     }
 
-    if (CheckIsFinished(nodes, q))
+    if (Functions.CheckIsFinished(nodes, q))
     {
         break;
     }
@@ -153,19 +153,24 @@ foreach (var node in nodes)
     Console.WriteLine($"{node.Id} -> {node.Value}");
 }
 
+var sameGraph = Functions.IsItTheSame(nodes, q);
+
+if (sameGraph != null && sameGraph.Count > 0)
+{
+    Console.WriteLine("Same Node Is : ");
+    foreach (var i in sameGraph)
+    {
+        Console.WriteLine($"Node Number {i} -> Value Is = {nodes.First(c => c.Id == i).Value}");
+    }
+}
+else
+{
+    Console.WriteLine("Finished");
+}
+
+
 Console.ReadLine();
 
-bool CheckIsFinished(List<AppGraph> graph, int qNodeId)
-{
-    var nodesss = graph.Where(g => g.Id != qNodeId).ToList();
 
-    foreach (var node in nodesss)
-    {
-        if (node.Value >= node.Graphs.Count)
-        {
-            return false;
-        }
-    }
 
-    return true;
-}
+
